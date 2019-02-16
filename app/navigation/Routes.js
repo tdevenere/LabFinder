@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import { createDrawerNavigator, StackNavigator } from 'react-navigation';
+import { createDrawerNavigator, StackNavigator, createAppContainer } from 'react-navigation';
 
 import StackNavigation from './StackNavigation';
 import SideMenu from '../screens/SideMenu';
 
 
-export default createDrawerNavigator({
+const stack = createDrawerNavigator({
     Options: { screen: StackNavigation },
 },
 {
@@ -14,3 +14,5 @@ export default createDrawerNavigator({
     drawerWidth: 300,
     headerMode: 'none',
 });
+
+export default createAppContainer(stack);
