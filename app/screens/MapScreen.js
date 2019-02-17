@@ -10,13 +10,9 @@ import {
 import { Button, Icon, SearchBar, Divider } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
-import Mapbox from '@mapbox/react-native-mapbox-gl';
 
 import config from '../config';
 import colors from '../assets/colors'
-
-const accessToken = config.mapboxAccessToken;
-Mapbox.setAccessToken(accessToken);
 
 
 class MapScreen extends Component{
@@ -27,7 +23,7 @@ class MapScreen extends Component{
             
         }
     }
-
+    /*
 
     // This will run as soon as the map screen loads.
     // Currently calls the getUserLocation method to update state.
@@ -45,8 +41,7 @@ class MapScreen extends Component{
             centerCoordinate: [this.state.currentCenter.longitude, this.state.currentCenter.latitude]
         })
     }
-
-    
+    */
 
     render(opts){
         return(
