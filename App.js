@@ -9,6 +9,7 @@
 
 import React, { Component } from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -23,24 +24,45 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { MenuProvider } from 'react-native-popup-menu'
 
 import rootReducer from './app/reducers';
-
-import PrimaryContainer from './app/containers/PrimaryContainer';
-
 import SplashScreen from './app/screens/SplashScreen';
-
-
 
 export default class App extends Component{
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>Fuck YOurself   </Text>
+      <TabNavigator persistenceKey={"NavigationState"}/>
+    );
+  }
+}
+
+class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Home!</Text>
       </View>
     );
   }
 }
+
+class SettingsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Settings!</Text>
+      </View>
+    );
+  }
+}
+
+const TabNavigator = createAppContainer(createBottomTabNavigator({
+  Home: HomeScreen,
+  Settings: SettingsScreen,
+}, {
+  tabBarOptions: {
+    activeTintColor: 'tomato',
+    inactiveTintColor: 'gray',
+  },
+}));
 
 const styles = StyleSheet.create({
   container: {
