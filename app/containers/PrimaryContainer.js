@@ -33,7 +33,7 @@ AppTabs = createBottomTabNavigator({
             tabBarIcon: ({tintColor}) => (
                 <Icon
                     name='search'
-                    type='material-community'
+                    type='material'
                     color={tintColor}
                     size={17} />
             )
