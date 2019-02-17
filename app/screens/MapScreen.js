@@ -13,6 +13,7 @@ import Mapbox from '@mapbox/react-native-mapbox-gl';
 
 import config from '../config';
 import colors from '../assets/colors'
+import building_coords from '../assets/data/building_coords'
 
 this.accessToken = config.mapboxAccessToken;
 Mapbox.setAccessToken(this.accessToken);
@@ -23,28 +24,9 @@ class MapScreen extends Component{
         super(props)
 
         this.state = {
-            
+            buildings: building_coords
         }
     }
-    /*
-
-    // This will run as soon as the map screen loads.
-    // Currently calls the getUserLocation method to update state.
-    componentDidMount(){
-        this.props.getUserLocation();
-        this.centerMapOnUser();
-    }
-
-    // Center the map on the user's posistion and update the currentCenter attribute.
-    centerMapOnUser = () => {
-        this.setState({
-            currentCenter: {latitude: this.props.userLocation[1], longitude: this.props.userLocation[0]}
-        });
-        this._map.setCamera({
-            centerCoordinate: [this.state.currentCenter.longitude, this.state.currentCenter.latitude]
-        })
-    }
-    */
 
     render(opts){
         console.log("C")
@@ -52,8 +34,9 @@ class MapScreen extends Component{
             <View style={styles.container}>
             {<Mapbox.MapView
                 styleURL={Mapbox.StyleURL.Street}
-                zoomLevel={15}
-                centerCoordinate={[11.256, 43.770]}
+                zoomLevel={16}
+                minZoomLevel={13.5}
+                centerCoordinate={[-122.48567828113772, 48.73386737906691]}
                 style={styles.container}>
             </Mapbox.MapView> }
           </View>
