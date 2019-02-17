@@ -14,11 +14,13 @@ import { NavigationActions } from 'react-navigation';
 import colors from '../assets/colors'
 
 import * as xmlParser from '../lib/xmlParser';
+import LabListItem from '../components/LabListItem';
+import Header from '../components/Header';
 
 
 
 
-class SearchScreen extends Component{
+class SearchScreen extends Component{ 
     constructor(props){
         super(props)
 
@@ -28,16 +30,49 @@ class SearchScreen extends Component{
     }
 
     logLabs = () =>{
-        xmlParser.parseLabs();
-        console.log('LAAAAAAAAABBBBBBBS: ', xmlParser.parseLabs());
-        
+        xmlParser.parseLabs();        
     }
+
+    dummy = [
+        {
+            space_name: 'CF 420',
+            formal_name: 'Communications Facility 420',
+            max_capacity: '20',
+            type: 'Computer Science',
+            os: ['Linux', 'Windows'],
+            reservations: [{
+                date: '2/14/19',
+                times: [
+                    {start: '11:00:00', end: '11:50:00'},
+                    {start: '13:00:00', end: '14:50:00'}
+                ]
+            }]
+        },
+        {
+            space_name: 'CF 120',
+            formal_name: 'Communications Facility 120',
+            max_capacity: '20',
+            type: 'ATUS/General',
+            os: ['Mac'],
+            reservations: []
+        }
+        
+    ]
+
+    keyExtractor = (item, index) => index.toString();
+
     render(opts){
         return(
             <View style={styles.container}>
-                <Text>Search Screen</Text>
-                <Button title="Parse XML"
-                onPress = {this.logLabs()} />
+                <Header
+                    onRequestOpen={this.showFilter}
+                    onRequestClose={this.hideFilter}
+                    modalVisible={this.state.filterVisible}
+                />
+                <FlatList
+                    data={dummy}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={({item}) => <LabListItem lab={item}/> } />
             </View>
         );
     }

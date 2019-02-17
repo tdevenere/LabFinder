@@ -29,10 +29,22 @@ export default StyleSheet.create({
         flexDirection: 'column',
         flex: 7,
         marginRight: 5,
-    },    
+    },
+    scheduleContainer:{
+        flexDirection: 'column'
+    },
+    scheduleDateContainer: {
+        flex: 3, 
+        marginLeft: 5
+    },
+    scheduleTimeContainer: {
+        flexDirection: 'row',
+        marginLeft: 5,
+        marginRight: 5
+    } , 
     divider: {
         marginTop: 5,
-        backgroundColor: colors.mediumGrey
+        backgroundColor: colors.white
     },
     nameText: {
         fontSize: 18, 

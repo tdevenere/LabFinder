@@ -7,7 +7,7 @@ import scheduleJson from "../assets/data/lab_schedules.js";
 
 export function parseLabs() {
   var labs = {    //Array object to hold all the labs
-    lab: []
+    lab: [] 
   };
 
   for (var i in labJson.spaces.space){ // Loop through each lab in json file
@@ -30,7 +30,7 @@ export function parseLabs() {
           "type" : "ATUS/General",
           "os" : ["Mac"],
           "building" : building,
-          "reservations" : []
+          "reservations" : [       ]
         });
       }else{
         labs.lab.push({
@@ -41,7 +41,7 @@ export function parseLabs() {
           "type" : "ATUS/General",
           "os" : ["Windows"],
           "building" : building,
-          "reservations" : []
+          "reservations" : [          ]
         });
       }
     }else if(partitionName == "DEPT SPACE" && building == "CF"){
@@ -53,7 +53,7 @@ export function parseLabs() {
         "type" : "Computer Science",
         "os" : ["Linux", "Windows "],
         "building" : building,
-        "reservations" : []
+        "reservations" : [ ]
       });
     }
   }
@@ -80,16 +80,31 @@ export function parseLabs() {
           var temp = endTime.split("T", 0);
           var endTime = endTime.split("0", 0);
     
-          lab.reservations.push({ // Add reservations to lab object
-            "date": date,
-            "start_time": startTime,
-            "end_time": endTime
-          });
+          var found = false;
+
+          for(var i in labs.reservations){
+            var reserved = lab.reservations[i].date
+            if(reserved == date){
+              lab.reservations[i].times.push({
+                "start": startTime,
+                "end": endTime
+              })
+              found = true;
+            }
+          }
+          if(found == false){
+            lab.reservations.push({
+              "date" : date,
+              times:[ {
+                "start": startTime,
+                "end": endTime
+              }]
+            })
+          }
         }
       }
     }catch{
       console.log("¯\_(ツ)_/¯")
     }
-
   }
 }

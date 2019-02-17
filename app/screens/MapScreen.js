@@ -32,8 +32,26 @@ class MapScreen extends Component{
                 name: "",
                 point: {},
                 labs: [],
-            }
+            },
+            options: [[
+                <Text style={{position: "absolute"}}>Option 1</Text>,
+                <Text style={{position: "absolute"}}>Option 2</Text>
+            ]],
+            filterVisible: false,
         }
+    }
+
+    showFilter = () => {
+        console.log("open sesamie")
+        this.setState({
+            filterVisible: true,
+        })
+    }
+
+    hideFilter = () => {
+        this.setState({
+            filterVisible: false,
+        })
     }
 
     onBuildingPress(building) {
@@ -92,7 +110,13 @@ class MapScreen extends Component{
             max_capacity: '20',
             type: 'Computer Science',
             os: ['Linux', 'Windows'],
-            reservations: []
+            reservations: [{
+                date: '2/14/19',
+                times: [
+                    {start: '11:00:00', end: '11:50:00'},
+                    {start: '13:00:00', end: '14:50:00'}
+                ]
+            }]
         },
         {
             space_name: 'CF 120',
@@ -108,23 +132,26 @@ class MapScreen extends Component{
     render(opts){
         return(
             <View style={styles.container}>
-            {<Header
-            />}
-            <Mapbox.MapView
-                styleURL={Mapbox.StyleURL.Street}
-                zoomLevel={16}
-                minZoomLevel={13.5}
-                centerCoordinate={[-122.48567828113772, 48.73386737906691]}
-                style={styles.container}
-                onPress={() => {}}
-            >
-                { this.state.buildings != null && this.renderBuildings(this.state.buildings)}
-            </Mapbox.MapView> 
-            <LabModal
-                modalVisible={this.state.showLabModal}
-                onRequestClose={this.closeLabModal}
-                labs={this.state.currentBuilding.labs}
-            />
+                <Header
+                    onRequestOpen={this.showFilter}
+                    onRequestClose={this.hideFilter}
+                    modalVisible={this.state.filterVisible}
+                />
+                <Mapbox.MapView
+                    styleURL={Mapbox.StyleURL.Street}
+                    zoomLevel={16}
+                    minZoomLevel={13.5}
+                    centerCoordinate={[-122.48567828113772, 48.73386737906691]}
+                    style={styles.container}
+                    onPress={() => {}}
+                >
+                    { this.state.buildings != null && this.renderBuildings(this.state.buildings)}
+                </Mapbox.MapView> 
+                <LabModal
+                    modalVisible={this.state.showLabModal}
+                    onRequestClose={this.closeLabModal}
+                    labs={this.dummy}
+                />
           </View>
         );
     }

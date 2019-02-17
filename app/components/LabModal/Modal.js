@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Text, TouchableOpacity, View, Image, FlatList} from 'react-native';
+import {Text, TouchableOpacity, View, Image, FlatList, ScrollView} from 'react-native';
 import { Icon, Divider, Button, } from 'react-native-elements';
 import styles from './styles.js';
 import Modal from 'react-native-modal';
@@ -17,10 +17,14 @@ const LabModal = (props) => {
             onBackdropPress={() => {props.onRequestClose()}} 
         >
             <Text style={styles.headerText}>THIS IS TEST TEXT</Text>
-            <FlatList   
-                data={props.labs} 
-                keyExtractor={this.keyExtractor}
-                renderItem={({item}) => <LabListItem lab={item}/> } />
+            <View style={styles.modalContent}>
+                <ScrollView contentContainerStyle={styles.scrollView}>
+                    <FlatList   
+                        data={props.labs} 
+                        keyExtractor={this.keyExtractor}
+                        renderItem={({item}) => <LabListItem lab={item}/> } />
+                </ScrollView>
+            </View>
         </Modal>
     );
 }

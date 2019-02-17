@@ -41,8 +41,8 @@ AppTabs = createBottomTabNavigator({
     }
 },{
     tabBarOptions: {
-        activeTintColor: colors.primaryBlue,
-        inactiveTintColor: colors.grey,
+        activeTintColor: colors.grape,
+        inactiveTintColor: colors.sand,
         style: {
             backgroundColor: colors.white,
             padding: 5,

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import {Text, TouchableOpacity, View, Image} from 'react-native';
+import {Text, TouchableOpacity, View, Image, FlatList} from 'react-native';
 import { Icon, Divider, Button, } from 'react-native-elements';
 import styles from './styles.js';
 import colors from '../../assets/colors.js';
 const images = require("../../assets/images");
+
+import {Collapse, CollapseBody, CollapseHeader} from 'accordion-collapse-react-native';
+
 const LabListItem = (props) => {
     const lab = props.lab;
 
@@ -34,11 +37,8 @@ const LabListItem = (props) => {
                     
                         
                     <View style={styles.topLeftContainer}>
-                    <TouchableOpacity 
-                        onPress={() => {props.openProject(project)}} >
                             <Text style={styles.nameText}>{lab.formal_name}</Text>
                             <Text style={styles.normalText}>{lab.type}</Text>
-                        </TouchableOpacity> 
                     </View>
                        
                     <View style={styles.topRightContainer}>
@@ -47,8 +47,6 @@ const LabListItem = (props) => {
                     </View>
                         
                 </View>
-                <TouchableOpacity 
-                        onPress={() => {props.openProject(project)}} >
                     <View style={styles.btmContainer}>
                         <View style={styles.leftContainer}>
                             {imageComponents[0]}
@@ -59,50 +57,72 @@ const LabListItem = (props) => {
                             <Text style={styles.textRow}><Text style={styles.subHeader}>Seats: </Text><Text style={styles.normalText}>{lab.max_capacity}</Text></Text>       
                         </View>
                     </View>
-                </TouchableOpacity>
             </View>
             <Divider style={styles.divider} />
         </View>
     );
+
+
+    
+    keyExtractor = (item, index) => index.toString();
+
+    renderTime = ({item}) => {
+        return(
+            <Text style={styles.normalText}>{time.start} - {times.end}</Text>
+        );
+    }
+
+    renderDate = ({item}) => {
+        return(
+            <View style={styles.scheduleDateContainer}>
+                <Text style={styles.subHeader}>{item.date}: </Text>
+            
+                <View style={styles.scheduleTimeContainer}>
+                    <FlatList
+                        data={item.times}
+                        keyExtractor={this.keyExtractor}
+                        renderItem={this.renderTime} />
+                </View>
+            </View>
+
+        );
+        
+    }
 
     var scheduleContent = (
         <View>
             <View style={styles.contentContainer} >
                 <View style={styles.topContainer}>
                     <View style={styles.topLeftContainer}>
-                    <TouchableOpacity 
-                        onPress={() => {props.openProject(project)}} >
-                            <Text style={styles.nameText}>{lab.formal_name}</Text>
-                            <Text style={styles.normalText}>{lab.type}</Text>
-                        </TouchableOpacity> 
+                        <Text style={styles.subHeader}>Reservations:</Text>
                     </View>
                        
-                    <View style={styles.topRightContainer}>
-                        
-                        
+                    <View style={styles.topRightContainer}>  
                     </View>
                         
                 </View>
-                <TouchableOpacity 
-                        onPress={() => {props.openProject(project)}} >
                     <View style={styles.btmContainer}>
-                        <View style={styles.leftContainer}>
-                            {imageComponents[0]}
-                            {imageComponents[1]}
-                            {imageComponents[2]}
-                        </View>
-                        <View style={styles.rightContainer}>
-                            <Text style={styles.textRow}><Text style={styles.subHeader}>Seats: </Text><Text style={styles.normalText}>{lab.max_capacity}</Text></Text>       
-                        </View>
+                        <FlatList 
+                            data={lab.reservations}
+                            keyExtractor={this.keyExtractor}
+                            renderItem={this.renderDate} />
                     </View>
-                </TouchableOpacity>
             </View>
             <Divider style={styles.divider} />
         </View>
     );
 
     return(
-        header
+        <View>
+        <Collapse>
+            <CollapseHeader>
+                {header}
+            </CollapseHeader>
+            <CollapseBody>
+                {scheduleContent}
+            </CollapseBody>
+        </Collapse>
+        </View>
     );
 }
 
