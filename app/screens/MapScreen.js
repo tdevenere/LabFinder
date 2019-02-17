@@ -15,6 +15,7 @@ import config from '../config';
 import colors from '../assets/colors'
 import building_coords from '../assets/data/building_coords'
 import LabModal from '../components/LabModal'
+import Header from '../components/Header'
 
 this.accessToken = config.mapboxAccessToken;
 Mapbox.setAccessToken(this.accessToken);
@@ -27,13 +28,19 @@ class MapScreen extends Component{
         this.state = {
             buildings: this.getBuildings(building_coords),
             showLabModal: false,
+            currentBuilding: {
+                name: "",
+                point: {},
+                labs: [],
+            }
         }
     }
 
-    onBuildingPress = () => {
+    onBuildingPress(building) {
         console.log("here")
         this.setState({
             showLabModal: true,
+            currentBuilding: building,
         });
     } 
 
@@ -45,7 +52,7 @@ class MapScreen extends Component{
 
     renderBuildings(buildings) {
         return buildings.map(building => (
-            <Mapbox.ShapeSource key={building.name} id={building.name} shape={building.point}  onPress={this.onBuildingPress}>
+            <Mapbox.ShapeSource key={building.name} id={building.name} shape={building.point}  onPress={() => {this.onBuildingPress(building)}}>
                 <Mapbox.SymbolLayer id={building.name} style={{iconSize: 0.4, iconImage: hasLabIcon}} />
             </Mapbox.ShapeSource>
         ));
@@ -64,7 +71,6 @@ class MapScreen extends Component{
             name: bc.name,
             point: this.extractPoint(bc.center),
             labs: [],
-            icon: null,
         });
     }   
 
@@ -79,11 +85,32 @@ class MapScreen extends Component{
             },
         });
     }
+    dummy = [
+        {
+            space_name: 'CF 420',
+            formal_name: 'Communications Facility 420',
+            max_capacity: '20',
+            type: 'Computer Science',
+            os: ['Linux', 'Windows'],
+            reservations: []
+        },
+        {
+            space_name: 'CF 120',
+            formal_name: 'Communications Facility 120',
+            max_capacity: '20',
+            type: 'ATUS/General',
+            os: ['Mac'],
+            reservations: []
+        }
+        
+    ]
 
     render(opts){
         return(
             <View style={styles.container}>
-            {<Mapbox.MapView
+            {<Header
+            />}
+            <Mapbox.MapView
                 styleURL={Mapbox.StyleURL.Street}
                 zoomLevel={16}
                 minZoomLevel={13.5}
@@ -92,10 +119,12 @@ class MapScreen extends Component{
                 onPress={() => {}}
             >
                 { this.state.buildings != null && this.renderBuildings(this.state.buildings)}
-                <LabModal
-                    modalVisible={this.state.showLabModal}
-                    onRequestClose={this.closeLabModal}/>
-            </Mapbox.MapView> }
+            </Mapbox.MapView> 
+            <LabModal
+                modalVisible={this.state.showLabModal}
+                onRequestClose={this.closeLabModal}
+                labs={this.state.currentBuilding.labs}
+            />
           </View>
         );
     }

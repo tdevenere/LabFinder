@@ -4,7 +4,8 @@ import colors from '../../assets/colors';
 export default StyleSheet.create({
     contentContainer: {
         flexDirection: 'column',
-        marginTop: 10
+        marginTop: 10, 
+        backgroundColor: colors.white,
     },
     topContainer: {
         flexDirection: 'row',
@@ -20,7 +21,7 @@ export default StyleSheet.create({
         flexDirection: 'row'
     },
     leftContainer:{
-        flexDirection: 'column',
+        flexDirection: 'row',
         flex: 3,
         marginTop: 3,
     },
@@ -50,8 +51,8 @@ export default StyleSheet.create({
         marginTop: 3,
     },
     avatarStyle: {
-        height: 90, 
-        width: 90,
+        height: 30, 
+        width: 30,
     },
     downloadIcon: {
         marginTop: 10, 
