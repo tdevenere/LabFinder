@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { createDrawerNavigator, StackNavigator, createAppContainer } from 'react-navigation';
 
 import StackNavigation from './StackNavigation';
-import SideMenu from '../screens/SideMenu';
+import PrimaryContainer from '..containers/P'
 
 
 const stack = createDrawerNavigator({

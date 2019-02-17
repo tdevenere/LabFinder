@@ -1,13 +1,4 @@
-import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import PrimaryContainer from '../containers/PrimaryContainer';
 
-import Router from './Routes';
-
-export default class Drawer extends Component {
-  render () {
-    return (
-      <Router/>
-      /*TODO save user's location when returning to the map*/
-    );
-  }
-}
+export default createAppContainer(PrimaryContainer);
