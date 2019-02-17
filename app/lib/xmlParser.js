@@ -3,8 +3,7 @@ import scheduleJson from "../assets/data/lab_schedules.js";
 
 export function parseLabs() {
   var labs = {
-    csLabs: [],
-    atusLabs: []
+    lab: []
   };
 
   for (var i in labJson.spaces.space){
@@ -16,21 +15,23 @@ export function parseLabs() {
     var partitionName = space.partition_name.__text
 
     if(partitionName == "ATUS COMPUTER LAB"){
-      labs.atusLabs.push({
+      labs.lab.push({
         "space_name" : space.space_name.__text,
         "formal_name": space.formal_name.__text,
         "max_capacity": space.max_capacity.__text,
         "partition_name" : space.partition_name.__text,
         "type" : "ATUS/General",
+        "os" : ["Windows"],
         "building" : building
       });
     }else if(partitionName == "DEPT SPACE" && building == "CF"){
-     labs.csLabs.push({
+     labs.lab.push({
         "space_name" : space.space_name.__text,
         "formal_name": space.formal_name.__text,
         "max_capacity": space.max_capacity.__text,
         "partition_name" : space.partition_name.__text,
         "type" : "Computer Science",
+        "os" : ["Linux", "Windows "],
         "building" : building
       });
     }
