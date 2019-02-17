@@ -1,4 +1,4 @@
-﻿{
+const json = {
 	"space_reservations": {
 		"space_reservation": [
 			{
@@ -2931,3 +2931,4 @@
 		"__prefix": "r25"
 	}
 }
+export default json;

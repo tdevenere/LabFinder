@@ -1,4 +1,4 @@
-﻿{
+﻿const json = {
 	"spaces": {
 		"space": [
 			{
@@ -20917,3 +20917,4 @@
 		"__prefix": "r25"
 	}
 }
+export default json;
