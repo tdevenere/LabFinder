@@ -13,6 +13,8 @@ import { NavigationActions } from 'react-navigation';
 
 import colors from '../assets/colors'
 
+import * as xmlParser from '../lib/xmlParser';
+
 
 
 
@@ -25,11 +27,17 @@ class SearchScreen extends Component{
         }
     }
 
-
+    logLabs = () =>{
+        xmlParser.parseLabs();
+        console.log('LAAAAAAAAABBBBBBBS: ', xmlParser.parseLabs());
+        
+    }
     render(opts){
         return(
             <View style={styles.container}>
                 <Text>Search Screen</Text>
+                <Button title="Parse XML"
+                onPress = {this.logLabs()} />
             </View>
         );
     }

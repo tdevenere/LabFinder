@@ -1,53 +1,45 @@
-import labJson from "../../assets/data/lab_list.json";
-import scheduleJson from "../../assets/data/lab_schedules.json";
-
-var atusLabs = {
-  labs: []
-};
-
-var csLabs = {
-  labs: []
-};
+import labJson from "../assets/data/lab_list.js";
+import scheduleJson from "../assets/data/lab_schedules.js";
 
 export function parseLabs() {
+  var labs = {
+    csLabs: [],
+    atusLabs: []
+  };
+
   for (var i in labJson.spaces.space){
 
     var space = labJson.spaces.space[i]; /// MIGHT NEED TO CHANGE TO JUST labJson.spaces
-    var building = space.space_name.split(" ");
+    var buildingName = space.space_name.__text;
+    var building = buildingName.split(" ", 0);
 
-    if(space.partition_name.equals("ATUS COMPUTER LAB")){
-      atusLabs.labs.push({
-        "space_name" : space.space_name,
-        "formal_name": space.formal_name,
-        "max_capacity": space.max_capacity,
-        "partition_name" : space.partition_name,
+    var partitionName = space.partition_name.__text
+
+    if(partitionName == "ATUS COMPUTER LAB"){
+      labs.atusLabs.push({
+        "space_name" : space.space_name.__text,
+        "formal_name": space.formal_name.__text,
+        "max_capacity": space.max_capacity.__text,
+        "partition_name" : space.partition_name.__text,
+        "type" : "ATUS/General",
         "building" : building
       });
-    }else if(space.partition_name.equals("DEPT SPACE") && building.equals("CF")){
-      csLabs.labs.push({
-        "space_name" : space.space_name,
-        "formal_name": space.formal_name,
-        "max_capacity": space.max_capacity,
-        "partition_name" : space.partition_name,
+    }else if(partitionName == "DEPT SPACE" && building == "CF"){
+     labs.csLabs.push({
+        "space_name" : space.space_name.__text,
+        "formal_name": space.formal_name.__text,
+        "max_capacity": space.max_capacity.__text,
+        "partition_name" : space.partition_name.__text,
+        "type" : "Computer Science",
         "building" : building
       });
     }
   }
+  return labs
 }
 
 export function parseLabSchedules(){
   for(var i in scheduleJson.space_reservations.space_reservation){
     //var reservation =
   }
-}
-
-
-
-
-export function returnAtusLabs(){
-  return atusLabs;
-}
-
-export function returnLabs(){
-  return csLabs;
 }
