@@ -5,7 +5,7 @@ import {
     FlatList,
     TouchableOpacity,
     Text, 
-    Alert
+    Alert,
 } from 'react-native';
 import { Button, Icon, SearchBar, Divider } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -17,19 +17,18 @@ import building_coords from '../assets/data/building_coords'
 
 this.accessToken = config.mapboxAccessToken;
 Mapbox.setAccessToken(this.accessToken);
+const hasLabIcon = require('../assets/images/computer.png')
 
 class MapScreen extends Component{
     constructor(props){
-        console.log("A")
         super(props)
 
         this.state = {
-            buildings: building_coords
+            buildings: getBuildings(building_coords),
         }
     }
 
     render(opts){
-        console.log("C")
         return(
             <View style={styles.container}>
             {<Mapbox.MapView
@@ -37,11 +36,55 @@ class MapScreen extends Component{
                 zoomLevel={16}
                 minZoomLevel={13.5}
                 centerCoordinate={[-122.48567828113772, 48.73386737906691]}
-                style={styles.container}>
+                style={styles.container}
+                onPress={() => {}}
+            >
+                { this.state.buildings != null && renderBuildings(this.state.buildings)}
             </Mapbox.MapView> }
           </View>
         );
     }
+}
+
+function renderBuildings(buildings) {
+    return buildings.map(building => (
+        <Mapbox.ShapeSource key={building.name} id={building.name} shape={building.point}  onPress={onBuildingPress}>
+            <Mapbox.SymbolLayer id={building.name} style={{iconSize: 0.4, iconImage: hasLabIcon}} />
+        </Mapbox.ShapeSource>
+    ));
+}
+
+var onBuildingPress = (e) => {
+    console.log("YOU TOUCHED ME")
+} 
+
+function getBuildings(building_coords) {
+    buildings = []
+    for(var i=0; i<building_coords.length; i++) {
+        buildings.push(getBuilding(building_coords[i]));
+    }
+    return buildings;
+}
+
+function getBuilding(bc) {
+    return ({
+        name: bc.name,
+        point: extractPoint(bc.center),
+        labs: [],
+        icon: null,
+    });
+}   
+
+function extractPoint(coords) {
+    return ({
+        "shape": "point",
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+            "type": "Point",
+            "coordinates": coords
+        },
+    });
 }
 
 // Screen Styles
@@ -49,41 +92,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
     },
-    button: {
-        width: 60,
-        height: 60,
-        backgroundColor: '#ee6e73',
-        position: 'absolute',
-        top: 55,
-        left: 15,
-        padding:0,
-        margin: 0,
-        borderRadius: 4,
-    },
-    mapMode: {
-        left: 145,
-        fontWeight: 'bold',
-        fontSize: 20,
-        top: 45,
-        position: 'absolute',
-    },
-    searchResult: {
-        backgroundColor: colors.white, 
-        flex: 0,
-        flexGrow: 1, 
-    },
-    searchResultItem: {
-        backgroundColor: colors.white,
-        margin: 5,
-    },
-    searchResultText:{
-        padding: 3,
-        fontSize: 18
-    },
-    divider: {
-        backgroundColor: colors.mediumGrey
-    },
-    
 });
 
 
