@@ -9,14 +9,17 @@ import {
 } from 'react-native';
 import { Button, Icon, SearchBar, Divider } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
+import Mapbox from '@mapbox/react-native-mapbox-gl';
 
 import config from '../config';
 import colors from '../assets/colors'
 
+this.accessToken = config.mapboxAccessToken;
+Mapbox.setAccessToken(this.accessToken);
 
 class MapScreen extends Component{
     constructor(props){
+        console.log("A")
         super(props)
 
         this.state = {
@@ -44,10 +47,16 @@ class MapScreen extends Component{
     */
 
     render(opts){
+        console.log("C")
         return(
             <View style={styles.container}>
-                <Text>Map Screen</Text>
-            </View>
+            {<Mapbox.MapView
+                styleURL={Mapbox.StyleURL.Street}
+                zoomLevel={15}
+                centerCoordinate={[11.256, 43.770]}
+                style={styles.container}>
+            </Mapbox.MapView> }
+          </View>
         );
     }
 }
@@ -74,10 +83,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         top: 45,
         position: 'absolute',
-    },
-    geoCoderStyle:{
-        justifyContent: 'center',
-        zIndex:5
     },
     searchResult: {
         backgroundColor: colors.white, 
